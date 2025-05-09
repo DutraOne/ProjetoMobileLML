@@ -16,7 +16,7 @@ export default function Home() {
       <Text style={styles.subtitle}>
         Adote um amigo de quatro patas com o adopt.io e transforme uma vida!
       </Text>
-      <TouchableOpacity style={styles.button} onPress={() => router.push('/welcome/welcome')}>
+      <TouchableOpacity style={styles.button} onPress={() => router.push('/home/home')}>
         <Text style={styles.buttonText}>Começar</Text>
       </TouchableOpacity>
     </View>

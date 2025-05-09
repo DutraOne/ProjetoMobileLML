@@ -21,7 +21,12 @@ export default function LoginScreen() {
       return;
     }
 
-    alert(isLogin ? "Login realizado com sucesso!" : "Conta registrada com sucesso!");
+    if (isLogin) {
+      alert("Login realizado com sucesso!");
+      router.push("/DogAdopt/DogAdopt");
+    } else {
+      alert("Conta registrada com sucesso!");
+    }
   };
 
   return (
@@ -64,9 +69,11 @@ export default function LoginScreen() {
 
         <Text style={styles.switchText}>
           {isLogin ? "Não tem uma conta?" : "Já tem uma conta?"}{" "}
-          <Text style={styles.switchLink} onPress={() =>router.push("/registro/registro")}>
+          <Text
+            style={styles.switchLink}
+            onPress={() => setIsLogin(!isLogin)}
+          >
             {isLogin ? "Criar conta" : "Fazer login"}
-            
           </Text>
         </Text>
       </View>
