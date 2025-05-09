@@ -13,20 +13,19 @@ import {
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-  const [isLogin, setIsLogin] = useState(true);
 
-  const handleSubmit = () => {
+  const handleLogin = () => {
     if (!email || !senha) {
       alert("Preencha todos os campos.");
       return;
     }
 
-    if (isLogin) {
-      alert("Login realizado com sucesso!");
-      router.push("/DogAdopt/DogAdopt");
-    } else {
-      alert("Conta registrada com sucesso!");
-    }
+    alert("Login realizado com sucesso!");
+    router.push("/DogAdopt/DogAdopt");
+  };
+
+  const goToRegister = () => {
+    router.push("/registro/registro");
   };
 
   return (
@@ -41,9 +40,7 @@ export default function LoginScreen() {
           <Text style={styles.tagline}>Adoções Fáceis</Text>
         </View>
 
-        <Text style={styles.title}>
-          {isLogin ? "Login" : "Criação de Conta"}
-        </Text>
+        <Text style={styles.title}>Login</Text>
 
         <Text style={styles.label}>Usuário ou email</Text>
         <TextInput
@@ -61,19 +58,14 @@ export default function LoginScreen() {
           onChangeText={setSenha}
         />
 
-        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-          <Text style={styles.buttonText}>
-            {isLogin ? "Entrar" : "Registrar"}
-          </Text>
+        <TouchableOpacity style={styles.button} onPress={handleLogin}>
+          <Text style={styles.buttonText}>Entrar</Text>
         </TouchableOpacity>
 
         <Text style={styles.switchText}>
-          {isLogin ? "Não tem uma conta?" : "Já tem uma conta?"}{" "}
-          <Text
-            style={styles.switchLink}
-            onPress={() => setIsLogin(!isLogin)}
-          >
-            {isLogin ? "Criar conta" : "Fazer login"}
+          Não tem uma conta?{" "}
+          <Text style={styles.switchLink} onPress={goToRegister}>
+            Criar conta
           </Text>
         </Text>
       </View>
@@ -83,7 +75,7 @@ export default function LoginScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#f0f0f0",
+    backgroundColor: "#f0fdf4",
     flexGrow: 1,
     justifyContent: "center",
     alignItems: "center",

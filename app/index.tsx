@@ -9,7 +9,7 @@ export default function Home() {
     <View style={styles.container}>
       <StatusBar style="dark" />
       <Image
-        source={{ uri: "https://cdn-icons-png.flaticon.com/512/616/616490.png" }}
+            source={require("@/assets/images/adopt.io-logo.png")}
         style={styles.logo}
       />
       <Text style={styles.title}>Encontre seu Pet</Text>

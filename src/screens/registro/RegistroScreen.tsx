@@ -1,3 +1,4 @@
+import { router } from "expo-router";
 import React, { useState } from "react";
 import {
   View,
@@ -9,7 +10,7 @@ import {
   Image,
 } from "react-native";
 
-export default function LoginScreen() {
+export default function RegisterScreen() {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
@@ -27,6 +28,10 @@ export default function LoginScreen() {
     }
 
     alert("Conta registrada com sucesso!");
+  };
+
+  const goToLogin = () => {
+    router.push("/login/login");
   };
 
   return (
@@ -81,7 +86,10 @@ export default function LoginScreen() {
         </TouchableOpacity>
 
         <Text style={styles.loginText}>
-          Já tem uma conta? <Text style={styles.loginLink}>Faça login</Text>
+          Já tem uma conta?{" "}
+          <Text style={styles.loginLink} onPress={goToLogin}>
+            Faça login
+          </Text>
         </Text>
       </View>
     </ScrollView>
@@ -90,7 +98,7 @@ export default function LoginScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#f0f0f0",
+    backgroundColor: "#f0fdf4",
     flexGrow: 1,
     justifyContent: "center",
     alignItems: "center",

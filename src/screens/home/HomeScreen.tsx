@@ -49,7 +49,7 @@ export default function WelcomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
-    backgroundColor: "#4C8C6A",
+    backgroundColor: "#f0fdf4",
     alignItems: "center",
     justifyContent: "center",
     padding: 20,

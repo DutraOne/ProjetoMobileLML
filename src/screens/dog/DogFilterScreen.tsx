@@ -12,8 +12,6 @@ export default function DogFilterScreen() {
 
   const handleSearch = () => {
     console.log("Filtros selecionados:", { distance, gender, ageGroup });
-
-    // Redirecionar para a tela de adoção, passando os filtros via query string
     router.push({
       pathname: "/DogAdopt/DogAdopt",
       params: {

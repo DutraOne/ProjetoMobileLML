@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#f0f0f0",
+    backgroundColor: "#f0fdf4",
     padding: 20,
   },
   congratulationsText: {
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 24,
     borderRadius: 8,
-    width: 260, // largura fixa igual para os dois botões
+    width: 260,
     alignItems: "center",
   },
   buttonText: {
