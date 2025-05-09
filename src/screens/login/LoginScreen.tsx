@@ -8,19 +8,29 @@ import {
   StyleSheet,
   ScrollView,
   Image,
+  Modal,
 } from "react-native";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [mensagemModal, setMensagemModal] = useState("");
+  const [modalVisible, setModalVisible] = useState(false);
+  const [modalTipo, setModalTipo] = useState<"erro" | "sucesso">("erro");
+
+  const exibirModal = (mensagem: string, tipo: "erro" | "sucesso") => {
+    setMensagemModal(mensagem);
+    setModalTipo(tipo);
+    setModalVisible(true);
+  };
 
   const handleLogin = () => {
     if (!email || !senha) {
-      alert("Preencha todos os campos.");
+      exibirModal("Preencha todos os campos.", "erro");
       return;
     }
 
-    alert("Login realizado com sucesso!");
+    exibirModal("Login realizado com sucesso!", "sucesso");
     router.push("/DogAdopt/DogAdopt");
   };
 
@@ -28,8 +38,46 @@ export default function LoginScreen() {
     router.push("/registro/registro");
   };
 
+  // Função para tratar o fechamento do modal e navegação para a próxima tela
+  const handleModalClose = () => {
+    setModalVisible(false);
+    if (modalTipo === "sucesso") {
+      router.push("/DogAdopt/DogAdopt"); // Alterar para a tela desejada
+    }
+  };
+
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      <Modal
+        animationType="fade"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => setModalVisible(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View
+            style={[
+              styles.modalBox,
+              modalTipo === "erro" ? styles.modalErro : styles.modalSucesso,
+            ]}
+          >
+            <Text style={styles.modalIcon}>
+              {modalTipo === "erro" ? "⚠️" : "✅"}
+            </Text>
+            <Text style={styles.modalTitulo}>
+              {modalTipo === "erro" ? "Atenção!" : "Sucesso!"}
+            </Text>
+            <Text style={styles.modalMensagem}>{mensagemModal}</Text>
+            <TouchableOpacity
+              style={styles.modalBotao}
+              onPress={handleModalClose}
+            >
+              <Text style={styles.modalBotaoTexto}>Entendi</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+
       <View style={styles.box}>
         <View style={styles.header}>
           <Image
@@ -152,5 +200,58 @@ const styles = StyleSheet.create({
   switchLink: {
     color: "#fff",
     textDecorationLine: "underline",
+  },
+
+  // Modal Styles
+  modalOverlay: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0,0,0,0.6)",
+  },
+  modalBox: {
+    backgroundColor: "#fff",
+    borderRadius: 15,
+    padding: 25,
+    width: "80%",
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOpacity: 0.25,
+    shadowRadius: 10,
+    elevation: 10,
+  },
+  modalIcon: {
+    fontSize: 40,
+    marginBottom: 10,
+  },
+  modalTitulo: {
+    fontSize: 22,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  modalMensagem: {
+    fontSize: 16,
+    color: "#333",
+    marginBottom: 20,
+    textAlign: "center",
+  },
+  modalBotao: {
+    backgroundColor: "#3A9D8A",
+    paddingVertical: 10,
+    paddingHorizontal: 25,
+    borderRadius: 8,
+  },
+  modalBotaoTexto: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+  modalErro: {
+    borderLeftWidth: 6,
+    borderLeftColor: "#e74c3c",
+  },
+  modalSucesso: {
+    borderLeftWidth: 6,
+    borderLeftColor: "#2ecc71",
   },
 });
