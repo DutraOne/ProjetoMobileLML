@@ -20,28 +20,28 @@ export default function CreditsScreen() {
         {/* Desenvolvedor 1 */}
         <View style={styles.devContainer}>
           <Image
-            source={require("@/assets/images/favicon.png")} // Caminho da imagem do dev 1
+            source={require("@/assets/images/lucas.jpg")} // Caminho da imagem do dev 1
             style={styles.devImage}
           />
-          <Text style={styles.devName}>Dev 1 - Nome</Text>
+          <Text style={styles.devName}>Lucas Dutra</Text>
         </View>
 
         {/* Desenvolvedor 2 */}
         <View style={styles.devContainer}>
           <Image
-            source={require("@/assets/images/icon.png")} // Caminho da imagem do dev 2
+            source={require("@/assets/images/matheus.png")} // Caminho da imagem do dev 2
             style={styles.devImage}
           />
-          <Text style={styles.devName}>Dev 2 - Nome</Text>
+          <Text style={styles.devName}>Matheus Souza</Text>
         </View>
 
         {/* Desenvolvedor 3 */}
         <View style={styles.devContainer}>
           <Image
-            source={require("@/assets/images/icon.png")} // Caminho da imagem do dev 3
+            source={require("@/assets/images/leo.jpg")} // Caminho da imagem do dev 3
             style={styles.devImage}
           />
-          <Text style={styles.devName}>Dev 3 - Nome</Text>
+          <Text style={styles.devName}>Leonardo Miranda</Text>
         </View>
       </ScrollView>
     </View>
