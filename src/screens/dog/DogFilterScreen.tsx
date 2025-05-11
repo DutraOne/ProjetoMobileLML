@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { useRouter } from "expo-router";
 
@@ -7,16 +7,14 @@ export default function DogFilterScreen() {
   const router = useRouter();
 
   const [distance, setDistance] = useState("5km");
-  const [gender, setGender] = useState("Macho");
   const [ageGroup, setAgeGroup] = useState("Filhote");
 
   const handleSearch = () => {
-    console.log("Filtros selecionados:", { distance, gender, ageGroup });
+    console.log("Filtros selecionados:", { distance, ageGroup });
     router.push({
       pathname: "/DogAdopt/DogAdopt",
       params: {
         distance,
-        gender,
         ageGroup,
       },
     });
@@ -24,6 +22,13 @@ export default function DogFilterScreen() {
 
   return (
     <View style={styles.container}>
+      <View style={styles.logoContainer}>
+        <Image
+          source={require("@/assets/images/adopt.io-logo.png")}
+          style={styles.logo}
+        />
+      </View>
+
       <Text style={styles.title}>Escolha seus filtros</Text>
 
       <Text style={styles.label}>Distância:</Text>
@@ -36,17 +41,6 @@ export default function DogFilterScreen() {
           <Picker.Item label="10 km" value="10km" />
           <Picker.Item label="15 km" value="15km" />
           <Picker.Item label="20 km" value="20km" />
-        </Picker>
-      </View>
-
-      <Text style={styles.label}>Sexo:</Text>
-      <View style={styles.pickerWrapper}>
-        <Picker
-          selectedValue={gender}
-          onValueChange={(itemValue) => setGender(itemValue)}
-        >
-          <Picker.Item label="Macho" value="Macho" />
-          <Picker.Item label="Fêmea" value="Fêmea" />
         </Picker>
       </View>
 
@@ -81,6 +75,16 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: "#3A9D8A",
     marginBottom: 20,
+  },
+  logoContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 30,
+  },
+  logo: {
+    width: 120,
+    height: 120,
+    resizeMode: "contain",
   },
   label: {
     fontSize: 16,
