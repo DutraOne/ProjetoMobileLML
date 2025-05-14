@@ -17,28 +17,25 @@ export default function CreditsScreen() {
       <Text style={styles.title}>Créditos</Text>
 
       <ScrollView contentContainerStyle={styles.devsContainer}>
-        {/* Desenvolvedor 1 */}
         <View style={styles.devContainer}>
           <Image
-            source={require("@/assets/images/lucas.jpg")} // Caminho da imagem do dev 1
+            source={require("@/assets/images/lucas.jpg")}
             style={styles.devImage}
           />
           <Text style={styles.devName}>Lucas Dutra</Text>
         </View>
 
-        {/* Desenvolvedor 2 */}
         <View style={styles.devContainer}>
           <Image
-            source={require("@/assets/images/matheus.png")} // Caminho da imagem do dev 2
+            source={require("@/assets/images/matheus.png")} 
             style={styles.devImage}
           />
           <Text style={styles.devName}>Matheus Souza</Text>
         </View>
 
-        {/* Desenvolvedor 3 */}
         <View style={styles.devContainer}>
           <Image
-            source={require("@/assets/images/leo.jpg")} // Caminho da imagem do dev 3
+            source={require("@/assets/images/leo.jpg")}
             style={styles.devImage}
           />
           <Text style={styles.devName}>Leonardo Miranda</Text>

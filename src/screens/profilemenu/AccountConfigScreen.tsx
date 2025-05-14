@@ -1,12 +1,5 @@
 import React, { useState, useCallback } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  Switch,
-} from "react-native";
+import {View, Text, StyleSheet, TouchableOpacity, Image, Switch,} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect, useRouter } from "expo-router";
 import MenuCentral from "@/src/components/MenuCentral";
@@ -16,21 +9,18 @@ export default function AccountConfigScreen() {
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [username, setUsername] = useState("Carregando...");
 
-  // Alterna e salva o estado das notificações
   const toggleNotifications = async () => {
     const newValue = !notificationsEnabled;
     setNotificationsEnabled(newValue);
     await AsyncStorage.setItem("notificationsEnabled", JSON.stringify(newValue));
   };
 
-  // Função para navegar para a tela DogAdopt
   const navigateToDogAdopt = () => {
-    router.push("/"); // Navega para a tela do DogAdopt
+    router.push("/");
   };
 
-  // Função para navegar para a tela de configurações de conta
   const navigateToAccountSettings = () => {
-    router.push("/profilemenu/AccountConfig"); // Navega para a tela de configurações de conta
+    router.push("/menu/Menu");
   };
 
   const handleChangeUsername = () => {
@@ -41,7 +31,6 @@ export default function AccountConfigScreen() {
     router.push("/profilemenu/ChangePassword");
   };
 
-  // Carrega dados ao focar na tela
   useFocusEffect(
     useCallback(() => {
       const loadData = async () => {
@@ -83,7 +72,6 @@ export default function AccountConfigScreen() {
           </View>
         </View>
 
-        {/* Novo botão para configurações de conta */}
         <TouchableOpacity
           style={styles.menuButton}
           onPress={navigateToAccountSettings}
@@ -91,10 +79,9 @@ export default function AccountConfigScreen() {
           <Text style={styles.menuText}>Configurações da Conta</Text>
         </TouchableOpacity>
 
-        {/* Botão "Sair" com o mesmo tamanho que estava antes */}
         <TouchableOpacity
           style={[styles.menuButton, styles.logoutButton]}
-          onPress={navigateToDogAdopt} // Navega para o DogAdopt
+          onPress={navigateToDogAdopt}
         >
           <Text style={styles.logoutText}>Sair</Text>
         </TouchableOpacity>
@@ -129,7 +116,7 @@ const styles = StyleSheet.create({
   },
   section: {
     width: "100%",
-    marginBottom: 40, // Aumentei o espaço entre as seções
+    marginBottom: 40,
   },
   option: {
     backgroundColor: "#fff",
@@ -159,7 +146,7 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     borderRadius: 8,
     marginBottom: 12,
-    width: "100%", // Garantir que o botão ocupe toda a largura
+    width: "100%",
     elevation: 3,
   },
   logoutButton: {

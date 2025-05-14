@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f0fdf4",
-    paddingBottom: 70, // espaço para o menu inferior
+    paddingBottom: 70,
   },
   content: {
     flex: 1,

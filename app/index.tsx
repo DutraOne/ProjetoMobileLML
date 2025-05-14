@@ -4,7 +4,6 @@ import { router } from 'expo-router';
 
 export default function Home() {
 
-
   return (
     <View style={styles.container}>
       <StatusBar style="dark" />

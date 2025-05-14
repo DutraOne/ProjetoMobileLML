@@ -19,7 +19,6 @@ export default function DogInfoScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        {/* Logo no topo */}
         <View style={styles.logoWrapper}>
           <Image
             source={require("@/assets/images/adopt.io-logo.png")}
@@ -28,7 +27,6 @@ export default function DogInfoScreen() {
           />
         </View>
 
-        {/* Imagem do cachorro */}
         <View style={styles.imageWrapper}>
           {image ? (
             <Image
@@ -65,38 +63,38 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#f0fdf4",
-    paddingBottom: 70, // espaço para o menu
+    paddingBottom: 70,
   },
   content: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
     paddingHorizontal: 24,
-    paddingTop: 20, // Adicionando um pequeno espaçamento superior
+    paddingTop: 20,
   },
   logoWrapper: {
     width: "100%",
-    height: 120, // Tamanho maior para a logo
-    marginBottom: 30, // Mais espaço entre logo e imagem do cachorro
+    height: 120,
+    marginBottom: 30,
     justifyContent: "center",
     alignItems: "center",
   },
   logo: {
-    width: 90, // Logo maior
-    height: 90, // Mais altura
+    width: 90,
+    height: 90,
   },
   imageWrapper: {
-    width: '100%', // Ajustando para um tamanho mais proporcional
-    height: '50%', // Ajustando a altura
+    width: '100%',
+    height: '50%',
     borderRadius: 16,
     overflow: "hidden",
     backgroundColor: "#eee",
-    marginBottom: 5, // Adicionando um pequeno espaço abaixo da imagem
+    marginBottom: 5,
   },
   dogImage: {
     width: "100%",
     height: "100%",
-    borderRadius: 16, // Para manter as bordas arredondadas
+    borderRadius: 16,
   },
   placeholderImage: {
     flex: 1,
@@ -132,7 +130,7 @@ const styles = StyleSheet.create({
     paddingVertical: 14,
     paddingHorizontal: 28,
     borderRadius: 10,
-    width: "100%", // Botão com largura total para facilitar o toque
+    width: "100%",
     alignItems: "center",
   },
   buttonText: {

@@ -54,7 +54,6 @@ export default function DogAdoptScreen() {
       const maxDistance = parseInt((distance as string)?.replace("km", "") || "100");
 
       if (parseInt(dist) > maxDistance) {
-        // tenta novamente com um cachorro mais próximo
         return fetchDogImage();
       }
 

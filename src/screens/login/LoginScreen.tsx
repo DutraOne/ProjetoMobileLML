@@ -1,15 +1,6 @@
 import { router } from "expo-router";
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  ScrollView,
-  Image,
-  Modal,
-} from "react-native";
+import {View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Image, Modal,} from "react-native";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
@@ -38,11 +29,10 @@ export default function LoginScreen() {
     router.push("/registro/registro");
   };
 
-  // Função para tratar o fechamento do modal e navegação para a próxima tela
   const handleModalClose = () => {
     setModalVisible(false);
     if (modalTipo === "sucesso") {
-      router.push("/DogAdopt/DogAdopt"); // Alterar para a tela desejada
+      router.push("/DogAdopt/DogAdopt");
     }
   };
 
@@ -202,7 +192,6 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
   },
 
-  // Modal Styles
   modalOverlay: {
     flex: 1,
     justifyContent: "center",

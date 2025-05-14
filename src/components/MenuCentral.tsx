@@ -18,10 +18,6 @@ export default function MenuCentral() {
       <TouchableOpacity onPress={() => router.push("/profilemenu/AccountConfig")}>
         <FontAwesome name="user" size={24} color="#3A9D8A" />
       </TouchableOpacity>
-
-      <TouchableOpacity onPress={() => router.push("/menu/Menu")}>
-        <FontAwesome name="cog" size={24} color="#3A9D8A" />
-      </TouchableOpacity>
     </View>
   );
 }

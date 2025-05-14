@@ -225,7 +225,6 @@ const styles = StyleSheet.create({
     textDecorationLine: "underline",
   },
 
-  // Modal Styles
   modalOverlay: {
     flex: 1,
     justifyContent: "center",
