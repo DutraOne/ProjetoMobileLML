@@ -1,6 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
+import MenuCentral from "@/src/components/MenuCentral";
 
 export default function AdoptionSuccessScreen() {
   const router = useRouter();
@@ -15,16 +16,25 @@ export default function AdoptionSuccessScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.congratulationsText}>🎉 Parabéns pela Adoção!</Text>
-      <Text style={styles.message}>Você acaba de dar um lar para um novo amigo!</Text>
+      <View style={styles.content}>
+        <Text style={styles.congratulationsText}>🎉 Parabéns pela Adoção!</Text>
+        <Text style={styles.message}>
+          Você acaba de dar um lar para um novo amigo!
+        </Text>
 
-      <TouchableOpacity style={styles.button} onPress={handleBackToHome}>
-        <Text style={styles.buttonText}>Voltar para a Página Inicial</Text>
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={handleBackToHome}>
+          <Text style={styles.buttonText}>Voltar para a Página Inicial</Text>
+        </TouchableOpacity>
 
-      <TouchableOpacity style={[styles.button, { marginTop: 12 }]} onPress={handleBackToAdoptions}>
-        <Text style={styles.buttonText}>Volte ao Menu de Adoções</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={[styles.button, { marginTop: 12 }]}
+          onPress={handleBackToAdoptions}
+        >
+          <Text style={styles.buttonText}>Volte ao Menu de Adoções</Text>
+        </TouchableOpacity>
+      </View>
+
+      <MenuCentral />
     </View>
   );
 }
@@ -32,9 +42,13 @@ export default function AdoptionSuccessScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "#f0fdf4",
+    paddingBottom: 70, // espaço para o menu inferior
+  },
+  content: {
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#f0fdf4",
     padding: 20,
   },
   congratulationsText: {

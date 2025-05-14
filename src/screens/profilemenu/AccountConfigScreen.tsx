@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   Image,
   Switch,
-  Alert,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect, useRouter } from "expo-router";
@@ -17,38 +16,41 @@ export default function AccountConfigScreen() {
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [username, setUsername] = useState("Carregando...");
 
-  const toggleNotifications = () =>
-    setNotificationsEnabled((prev) => !prev);
+  // Alterna e salva o estado das notificações
+  const toggleNotifications = async () => {
+    const newValue = !notificationsEnabled;
+    setNotificationsEnabled(newValue);
+    await AsyncStorage.setItem("notificationsEnabled", JSON.stringify(newValue));
+  };
 
-  const handleLogout = () => {
-    Alert.alert("Sair", "Deseja realmente sair da sua conta?", [
-      { text: "Cancelar", style: "cancel" },
-      {
-        text: "Sair",
-        style: "destructive",
-        onPress: () => {
-          // router.push("/login");
-        },
-      },
-    ]);
+  // Função para navegar para a tela DogAdopt
+  const navigateToDogAdopt = () => {
+    router.push("/"); // Navega para a tela do DogAdopt
+  };
+
+  // Função para navegar para a tela de configurações de conta
+  const navigateToAccountSettings = () => {
+    router.push("/profilemenu/AccountConfig"); // Navega para a tela de configurações de conta
   };
 
   const handleChangeUsername = () => {
-    router.push("/menu/ChangeUsername");
+    router.push("/profilemenu/ChangeUsername");
   };
 
   const handleChangePassword = () => {
-    router.push("/menu/ChangePassword");
+    router.push("/profilemenu/ChangePassword");
   };
 
-  // Recarrega quando a tela é focada
+  // Carrega dados ao focar na tela
   useFocusEffect(
     useCallback(() => {
-      const loadUsername = async () => {
+      const loadData = async () => {
         const storedName = await AsyncStorage.getItem("username");
+        const storedNotifications = await AsyncStorage.getItem("notificationsEnabled");
         setUsername(storedName || "@usuario123");
+        setNotificationsEnabled(storedNotifications === "false" ? false : true);
       };
-      loadUsername();
+      loadData();
     }, [])
   );
 
@@ -81,8 +83,20 @@ export default function AccountConfigScreen() {
           </View>
         </View>
 
-        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-          <Text style={styles.logoutText}>Sair da conta</Text>
+        {/* Novo botão para configurações de conta */}
+        <TouchableOpacity
+          style={styles.menuButton}
+          onPress={navigateToAccountSettings}
+        >
+          <Text style={styles.menuText}>Configurações da Conta</Text>
+        </TouchableOpacity>
+
+        {/* Botão "Sair" com o mesmo tamanho que estava antes */}
+        <TouchableOpacity
+          style={[styles.menuButton, styles.logoutButton]}
+          onPress={navigateToDogAdopt} // Navega para o DogAdopt
+        >
+          <Text style={styles.logoutText}>Sair</Text>
         </TouchableOpacity>
       </View>
 
@@ -115,7 +129,7 @@ const styles = StyleSheet.create({
   },
   section: {
     width: "100%",
-    marginBottom: 30,
+    marginBottom: 40, // Aumentei o espaço entre as seções
   },
   option: {
     backgroundColor: "#fff",
@@ -140,17 +154,26 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#ddd",
   },
+  menuButton: {
+    backgroundColor: "#3A9D8A",
+    paddingVertical: 14,
+    borderRadius: 8,
+    marginBottom: 12,
+    width: "100%", // Garantir que o botão ocupe toda a largura
+    elevation: 3,
+  },
   logoutButton: {
     backgroundColor: "#E53E3E",
-    padding: 12,
-    borderRadius: 8,
-    marginTop: 20,
-    width: "100%",
-    alignItems: "center",
+  },
+  menuText: {
+    fontSize: 16,
+    color: "#fff",
+    textAlign: "center",
   },
   logoutText: {
-    color: "#fff",
-    fontWeight: "bold",
     fontSize: 16,
+    color: "#fff",
+    textAlign: "center",
+    fontWeight: "bold",
   },
 });

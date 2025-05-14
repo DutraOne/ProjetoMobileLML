@@ -27,7 +27,7 @@ export default function MenuScreen() {
         <View style={styles.menuOptionsContainer}>
           <TouchableOpacity
             style={styles.menuButton}
-            onPress={() => router.push("/menu/AccountConfig")}
+            onPress={() => router.push("/profilemenu/AccountConfig")}
           >
             <Text style={styles.menuText}>Configurações da Conta</Text>
           </TouchableOpacity>
