@@ -1,6 +1,7 @@
 import { router } from "expo-router";
 import React, { useState } from "react";
-import {View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Image, Modal,} from "react-native";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Image, Modal, ImageBackground,} from "react-native";
+import { BlurView } from "expo-blur";
 
 export default function LoginScreen() {
   const [email, setEmail] = useState("");
@@ -37,38 +38,45 @@ export default function LoginScreen() {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <View style={styles.modalOverlay}>
-          <View
-            style={[
-              styles.modalBox,
-              modalTipo === "erro" ? styles.modalErro : styles.modalSucesso,
-            ]}
-          >
-            <Text style={styles.modalIcon}>
-              {modalTipo === "erro" ? "⚠️" : "✅"}
-            </Text>
-            <Text style={styles.modalTitulo}>
-              {modalTipo === "erro" ? "Atenção!" : "Sucesso!"}
-            </Text>
-            <Text style={styles.modalMensagem}>{mensagemModal}</Text>
-            <TouchableOpacity
-              style={styles.modalBotao}
-              onPress={handleModalClose}
-            >
-              <Text style={styles.modalBotaoTexto}>Entendi</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
+    <ImageBackground
+      source={require("@/assets/images/maya.png")}
+      style={styles.background}
+      resizeMode="cover"
+    >
+      <BlurView intensity={70} tint="dark" style={StyleSheet.absoluteFill} />
+      <View style={styles.overlay} />
 
-      <View style={styles.box}>
+      <ScrollView contentContainerStyle={styles.container}>
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => setModalVisible(false)}
+        >
+          <View style={styles.modalOverlay}>
+            <View
+              style={[
+                styles.modalBox,
+                modalTipo === "erro" ? styles.modalErro : styles.modalSucesso,
+              ]}
+            >
+              <Text style={styles.modalIcon}>
+                {modalTipo === "erro" ? "⚠️" : "✅"}
+              </Text>
+              <Text style={styles.modalTitulo}>
+                {modalTipo === "erro" ? "Atenção!" : "Sucesso!"}
+              </Text>
+              <Text style={styles.modalMensagem}>{mensagemModal}</Text>
+              <TouchableOpacity
+                style={styles.modalBotao}
+                onPress={handleModalClose}
+              >
+                <Text style={styles.modalBotaoTexto}>Entendi</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+
         <View style={styles.header}>
           <Image
             source={require("@/assets/images/adopt.io-logo.png")}
@@ -106,29 +114,26 @@ export default function LoginScreen() {
             Criar conta
           </Text>
         </Text>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
   container: {
-    backgroundColor: "#f0fdf4",
     flexGrow: 1,
     justifyContent: "center",
     alignItems: "center",
     padding: 20,
-  },
-  box: {
-    backgroundColor: "#3A9D8A",
-    borderRadius: 20,
-    padding: 20,
-    width: "100%",
-    maxWidth: 400,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.1,
-    shadowRadius: 10,
   },
   header: {
     alignItems: "center",
@@ -147,20 +152,21 @@ const styles = StyleSheet.create({
   },
   tagline: {
     fontSize: 16,
-    color: "#fff",
+    color: "#d1fae5",
     marginBottom: 10,
   },
   title: {
-    color: "#fff",
+    color: "#f0fdf4",
     fontSize: 26,
     fontWeight: "bold",
     marginBottom: 20,
     textAlign: "center",
   },
   label: {
-    color: "#fff",
+    color: "#f0fdf4",
     marginBottom: 5,
     fontSize: 14,
+    alignSelf: "flex-start",
   },
   input: {
     backgroundColor: "#fff",
@@ -170,25 +176,29 @@ const styles = StyleSheet.create({
     fontSize: 14,
     borderColor: "#e0e0e0",
     borderWidth: 1,
+    width: "100%",
+    maxWidth: 400,
   },
   button: {
-    backgroundColor: "#fff",
+    backgroundColor: "#16a34a",
     padding: 15,
     borderRadius: 10,
     alignItems: "center",
+    width: "100%",
+    maxWidth: 400,
   },
   buttonText: {
-    color: "#3A9D8A",
+    color: "#fff",
     fontWeight: "bold",
     fontSize: 16,
   },
   switchText: {
     textAlign: "center",
-    color: "#fff",
+    color: "#f0fdf4",
     marginTop: 15,
   },
   switchLink: {
-    color: "#fff",
+    color: "#f0fdf4",
     textDecorationLine: "underline",
   },
 

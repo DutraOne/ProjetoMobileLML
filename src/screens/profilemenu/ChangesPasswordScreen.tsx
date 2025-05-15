@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert, ImageBackground,} from "react-native";
 import { useRouter } from "expo-router";
+import { BlurView } from "expo-blur";
 
 export default function ChangePassword() {
   const [password, setPassword] = useState("");
@@ -24,55 +25,72 @@ export default function ChangePassword() {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.label}>Nova senha</Text>
-      <TextInput
-        secureTextEntry
-        style={styles.input}
-        placeholder="Digite sua nova senha"
-        value={password}
-        onChangeText={setPassword}
-      />
+    <ImageBackground
+      source={require("@/assets/images/maya2.png")}
+      style={styles.background}
+      resizeMode="cover"
+    >
+      <BlurView intensity={70} tint="dark" style={StyleSheet.absoluteFill} />
 
-      <Text style={styles.label}>Confirmar nova senha</Text>
-      <TextInput
-        secureTextEntry
-        style={styles.input}
-        placeholder="Confirme a nova senha"
-        value={confirm}
-        onChangeText={setConfirm}
-      />
+      <View style={styles.overlay}>
+        <Text style={styles.label}>Nova senha</Text>
+        <TextInput
+          secureTextEntry
+          style={styles.input}
+          placeholder="Digite sua nova senha"
+          placeholderTextColor="#aaa"
+          value={password}
+          onChangeText={setPassword}
+        />
 
-      <TouchableOpacity style={styles.button} onPress={handleSave}>
-        <Text style={styles.buttonText}>Salvar</Text>
-      </TouchableOpacity>
+        <Text style={styles.label}>Confirmar nova senha</Text>
+        <TextInput
+          secureTextEntry
+          style={styles.input}
+          placeholder="Confirme a nova senha"
+          placeholderTextColor="#aaa"
+          value={confirm}
+          onChangeText={setConfirm}
+        />
 
-      <TouchableOpacity style={[styles.button, styles.cancel]} onPress={() => router.back()}>
-        <Text style={styles.buttonText}>Cancelar</Text>
-      </TouchableOpacity>
-    </View>
+        <TouchableOpacity style={styles.button} onPress={handleSave}>
+          <Text style={styles.buttonText}>Salvar</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.button, styles.cancel]}
+          onPress={() => router.back()}
+        >
+          <Text style={styles.buttonText}>Cancelar</Text>
+        </TouchableOpacity>
+      </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  background: {
     flex: 1,
-    backgroundColor: "#f0fdf4",
+  },
+  overlay: {
+    flex: 1,
     padding: 24,
     justifyContent: "center",
   },
   label: {
     fontSize: 18,
     marginBottom: 8,
-    color: "#333",
+    color: "#fff",
+    fontWeight: "bold",
   },
   input: {
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: "rgba(255,255,255,0.4)",
     borderRadius: 8,
     padding: 12,
     marginBottom: 16,
-    backgroundColor: "#fff",
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    color: "#fff",
   },
   button: {
     backgroundColor: "#3A9D8A",
@@ -82,7 +100,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   cancel: {
-    backgroundColor: "#ccc",
+    backgroundColor: "#999",
   },
   buttonText: {
     color: "#fff",

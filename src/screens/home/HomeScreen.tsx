@@ -1,10 +1,18 @@
-import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView } from "react-native";
+import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView, ImageBackground } from "react-native";
 import { router } from "expo-router";
+import { BlurView } from "expo-blur";
 
 export default function WelcomeScreen() {
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <View style={styles.box}>
+    <ImageBackground
+      source={require("@/assets/images/maya.png")}
+      style={styles.background}
+      resizeMode="cover"
+    >
+      <BlurView intensity={70} tint="dark" style={StyleSheet.absoluteFill} />
+      <View style={styles.overlay} />
+
+      <ScrollView contentContainerStyle={styles.container}>
         <View style={styles.logoContainer}>
           <Image
             source={require("@/assets/images/adopt.io-logo.png")}
@@ -21,7 +29,7 @@ export default function WelcomeScreen() {
         </Text>
 
         <View style={styles.loginContainer}>
-          <TouchableOpacity onPress={() => {/* Ainda precisamos implementar recuperação de senha */}}>
+          <TouchableOpacity onPress={() => {/* recuperação futura */}}>
             <Text style={styles.forgotPassword}>Esqueceu a senha?</Text>
           </TouchableOpacity>
 
@@ -41,26 +49,29 @@ export default function WelcomeScreen() {
             <Text style={styles.buttonText}>Criar uma conta</Text>
           </TouchableOpacity>
         </View>
-      </View>
-    </ScrollView>
+          <View style={styles.footer}>
+            <Text style={styles.footerText}>ADOPT.IO | ©</Text>
+          </View>
+      </ScrollView>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+  },
   container: {
     flexGrow: 1,
-    backgroundColor: "#f0fdf4",
     alignItems: "center",
     justifyContent: "center",
     padding: 20,
-  },
-  box: {
-    backgroundColor: "#fff",
-    borderRadius: 20,
-    padding: 20,
-    maxWidth: 400,
-    width: "100%",
-    alignItems: "center",
   },
   logoContainer: {
     marginBottom: 20,
@@ -76,40 +87,50 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 20,
-    color: "#2B5D47",
+    color: "#d1fae5",
     marginBottom: 10,
   },
   description: {
     fontSize: 14,
-    color: "#333",
+    color: "#f0fdf4",
     textAlign: "center",
     marginBottom: 8,
+    paddingHorizontal: 10,
   },
   loginContainer: {
     marginTop: 20,
     width: "100%",
   },
   forgotPassword: {
-    color: "#2B5D47",
+    color: "#d1fae5",
     textAlign: "center",
     marginBottom: 15,
     textDecorationLine: "underline",
   },
   button: {
-    backgroundColor: "#A3D9C6",
+    backgroundColor: "#16a34a",
     padding: 12,
     borderRadius: 10,
     alignItems: "center",
     marginBottom: 10,
   },
   buttonText: {
-    color: "#2B5D47",
+    color: "#fff",
     fontSize: 16,
     fontWeight: "bold",
   },
   orText: {
     textAlign: "center",
-    color: "#2B5D47",
+    color: "#d1fae5",
     marginVertical: 10,
+  },
+    footer: {
+    position: 'absolute',
+    bottom: 30,
+    alignItems: 'center',
+  },
+  footerText: {
+    fontSize: 12,
+    color: '#e5e7eb',
   },
 });

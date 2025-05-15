@@ -1,15 +1,7 @@
 import { router } from "expo-router";
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  StyleSheet,
-  ScrollView,
-  Image,
-  Modal,
-} from "react-native";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ScrollView, Image, Modal, ImageBackground,} from "react-native";
+import { BlurView } from "expo-blur";
 
 export default function RegisterScreen() {
   const [nome, setNome] = useState("");
@@ -58,38 +50,44 @@ export default function RegisterScreen() {
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Modal
-        animationType="fade"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => setModalVisible(false)}
-      >
-        <View style={styles.modalOverlay}>
-          <View
-            style={[
-              styles.modalBox,
-              modalTipo === "erro" ? styles.modalErro : styles.modalSucesso,
-            ]}
-          >
-            <Text style={styles.modalIcon}>
-              {modalTipo === "erro" ? "⚠️" : "✅"}
-            </Text>
-            <Text style={styles.modalTitulo}>
-              {modalTipo === "erro" ? "Atenção!" : "Sucesso!"}
-            </Text>
-            <Text style={styles.modalMensagem}>{mensagemModal}</Text>
-            <TouchableOpacity
-              style={styles.modalBotao}
-              onPress={handleModalClose}
-            >
-              <Text style={styles.modalBotaoTexto}>Entendi</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
+    <ImageBackground
+      source={require("@/assets/images/maya.png")}
+      style={styles.background}
+      resizeMode="cover"
+    >
+      <BlurView intensity={70} tint="dark" style={StyleSheet.absoluteFill} />
 
-      <View style={styles.box}>
+      <ScrollView contentContainerStyle={styles.container}>
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => setModalVisible(false)}
+        >
+          <View style={styles.modalOverlay}>
+            <View
+              style={[
+                styles.modalBox,
+                modalTipo === "erro" ? styles.modalErro : styles.modalSucesso,
+              ]}
+            >
+              <Text style={styles.modalIcon}>
+                {modalTipo === "erro" ? "⚠️" : "✅"}
+              </Text>
+              <Text style={styles.modalTitulo}>
+                {modalTipo === "erro" ? "Atenção!" : "Sucesso!"}
+              </Text>
+              <Text style={styles.modalMensagem}>{mensagemModal}</Text>
+              <TouchableOpacity
+                style={styles.modalBotao}
+                onPress={handleModalClose}
+              >
+                <Text style={styles.modalBotaoTexto}>Entendi</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+
         <View style={styles.header}>
           <Image
             source={require("@/assets/images/adopt.io-logo.png")}
@@ -100,15 +98,11 @@ export default function RegisterScreen() {
         </View>
 
         <Text style={styles.title}>
-          1º ETAPA{"\n"}Comece criando sua conta :
+          1º ETAPA{"\n"}Comece criando sua conta:
         </Text>
 
         <Text style={styles.label}>Nome:</Text>
-        <TextInput
-          style={styles.input}
-          value={nome}
-          onChangeText={setNome}
-        />
+        <TextInput style={styles.input} value={nome} onChangeText={setNome} />
 
         <Text style={styles.label}>Endereço de e-mail:</Text>
         <TextInput
@@ -144,25 +138,21 @@ export default function RegisterScreen() {
             Faça login
           </Text>
         </Text>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+  },
   container: {
-    backgroundColor: "#f0fdf4",
     flexGrow: 1,
     justifyContent: "center",
-    alignItems: "center",
     padding: 20,
-  },
-  box: {
-    backgroundColor: "#3A9D8A",
-    borderRadius: 20,
-    padding: 20,
-    width: "100%",
-    maxWidth: 400,
   },
   header: {
     alignItems: "center",
@@ -201,17 +191,15 @@ const styles = StyleSheet.create({
     padding: 12,
     marginBottom: 15,
     fontSize: 14,
-    borderColor: "#fff",
-    borderWidth: 1,
   },
   button: {
-    backgroundColor: "#fff",
+    backgroundColor: "#16a34a",
     padding: 15,
     borderRadius: 10,
     alignItems: "center",
   },
   buttonText: {
-    color: "#3A9D8A",
+    color: "#fff",
     fontWeight: "bold",
     fontSize: 16,
   },

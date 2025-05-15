@@ -1,7 +1,8 @@
 import React, { useState, useCallback } from "react";
-import {View, Text, StyleSheet, TouchableOpacity, Image, Switch,} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Image, Switch, ImageBackground, } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useFocusEffect, useRouter } from "expo-router";
+import { BlurView } from "expo-blur";
 import MenuCentral from "@/src/components/MenuCentral";
 
 export default function AccountConfigScreen() {
@@ -44,102 +45,108 @@ export default function AccountConfigScreen() {
   );
 
   return (
-    <View style={styles.container}>
-      <View style={styles.content}>
-        <Image
-          source={require("@/assets/images/lucas.jpg")}
-          style={styles.avatar}
-        />
-        <Text style={styles.username}>{username}</Text>
+    <ImageBackground
+      source={require("@/assets/images/maya2.png")}
+      style={styles.background}
+      resizeMode="cover"
+    >
+      <BlurView intensity={70} tint="dark" style={StyleSheet.absoluteFill} />
 
-        <View style={styles.section}>
-          <TouchableOpacity style={styles.option} onPress={handleChangeUsername}>
-            <Text style={styles.optionText}>Alterar nome de usuário</Text>
-          </TouchableOpacity>
+      <View style={styles.overlay}>
+        <View style={styles.content}>
+          <Image
+            source={require("@/assets/images/lucas.jpg")}
+            style={styles.avatar}
+          />
+          <Text style={styles.username}>{username}</Text>
 
-          <TouchableOpacity style={styles.option} onPress={handleChangePassword}>
-            <Text style={styles.optionText}>Trocar senha</Text>
-          </TouchableOpacity>
-        </View>
+          <View style={styles.section}>
+            <View style={styles.switchRow}>
+              <Text style={styles.optionText}>Notificações</Text>
+              <Switch
+                value={notificationsEnabled}
+                onValueChange={toggleNotifications}
+              />
+            </View>
 
-        <View style={styles.section}>
-          <View style={styles.switchRow}>
-            <Text style={styles.optionText}>Notificações</Text>
-            <Switch
-              value={notificationsEnabled}
-              onValueChange={toggleNotifications}
-            />
+            <TouchableOpacity style={styles.option} onPress={handleChangeUsername}>
+              <Text style={styles.optionText}>Alterar nome de usuário</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.option} onPress={handleChangePassword}>
+              <Text style={styles.optionText}>Alterar senha</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.menuButton} onPress={navigateToAccountSettings}>
+              <Text style={styles.menuText}>Configurações</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={[styles.menuButton, styles.logoutButton]} onPress={navigateToDogAdopt}>
+              <Text style={styles.logoutText}>Sair</Text>
+            </TouchableOpacity>
           </View>
         </View>
-
-        <TouchableOpacity
-          style={styles.menuButton}
-          onPress={navigateToAccountSettings}
-        >
-          <Text style={styles.menuText}>Configurações da Conta</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[styles.menuButton, styles.logoutButton]}
-          onPress={navigateToDogAdopt}
-        >
-          <Text style={styles.logoutText}>Sair</Text>
-        </TouchableOpacity>
       </View>
 
       <MenuCentral />
-    </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  background: {
     flex: 1,
-    backgroundColor: "#F9FAFB",
+    resizeMode: "cover",
+  },
+  overlay: {
+    flex: 1,
     paddingBottom: 70,
+    justifyContent: "center",
+    alignItems: "center",
   },
   content: {
-    flex: 1,
+    width: "90%",
     alignItems: "center",
     padding: 24,
+    // fundo removido
   },
   avatar: {
     width: 120,
     height: 120,
     borderRadius: 60,
+    marginBottom: 20,
   },
   username: {
     fontSize: 20,
     fontWeight: "600",
-    color: "#333",
+    color: "#fff",
     marginBottom: 30,
   },
   section: {
     width: "100%",
-    marginBottom: 40,
   },
   option: {
-    backgroundColor: "#fff",
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
     padding: 14,
     borderRadius: 8,
     marginBottom: 12,
     borderWidth: 1,
-    borderColor: "#ddd",
+    borderColor: "rgba(255,255,255,0.2)",
   },
   optionText: {
     fontSize: 16,
-    color: "#333",
+    color: "#fff",
   },
   switchRow: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor: "#fff",
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
     padding: 14,
     borderRadius: 8,
     marginBottom: 12,
     borderWidth: 1,
-    borderColor: "#ddd",
+    borderColor: "rgba(255,255,255,0.2)",
   },
   menuButton: {
     backgroundColor: "#3A9D8A",

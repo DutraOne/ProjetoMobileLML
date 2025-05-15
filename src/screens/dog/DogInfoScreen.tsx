@@ -1,7 +1,7 @@
 import React from "react";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
-import MenuCentral from "@/src/components/MenuCentral";
+import { View, Text, StyleSheet, Image, TouchableOpacity, ImageBackground,} from "react-native";
+import { BlurView } from "expo-blur";
 
 export default function DogInfoScreen() {
   const {
@@ -13,58 +13,70 @@ export default function DogInfoScreen() {
   const router = useRouter();
 
   const handleFinishAdoption = () => {
-    router.push("/DogAdopt/AdoptionSuccess");
+    router.push({
+      pathname: "/DogAdopt/AdoptionSuccess",
+      params: { name: name as string, image: image as string },
+    });
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.content}>
-        <View style={styles.logoWrapper}>
-          <Image
-            source={require("@/assets/images/adopt.io-logo.png")}
-            style={styles.logo}
-            resizeMode="contain"
-          />
-        </View>
+    <ImageBackground
+      source={require("@/assets/images/maya2.png")}
+      style={styles.background}
+      resizeMode="cover"
+    >
+      <BlurView intensity={80} tint="dark" style={StyleSheet.absoluteFill} />
 
-        <View style={styles.imageWrapper}>
-          {image ? (
+      <View style={styles.container}>
+        <View style={styles.content}>
+          <View style={styles.logoWrapper}>
             <Image
-              source={{ uri: image as string }}
-              style={styles.dogImage}
-              resizeMode="cover"
+              source={require("@/assets/images/adopt.io-logo.png")}
+              style={styles.logo}
+              resizeMode="contain"
             />
-          ) : (
-            <View style={styles.placeholderImage}>
-              <Text style={styles.placeholderText}>Sem imagem</Text>
-            </View>
-          )}
+          </View>
+
+          <View style={styles.imageWrapper}>
+            {image ? (
+              <Image
+                source={{ uri: image as string }}
+                style={styles.dogImage}
+                resizeMode="cover"
+              />
+            ) : (
+              <View style={styles.placeholderImage}>
+                <Text style={styles.placeholderText}>Sem imagem</Text>
+              </View>
+            )}
+          </View>
+
+          <Text style={styles.title}>Informações do Cão</Text>
+
+          <View style={styles.infoBox}>
+            <Text style={styles.info}>
+              🐶 Nome: <Text style={styles.value}>{name}</Text>
+            </Text>
+            <Text style={styles.info}>
+              📍 Distância: <Text style={styles.value}>{distance}</Text>
+            </Text>
+            <Text style={styles.info}>
+              🎂 Idade: <Text style={styles.value}>{age}</Text>
+            </Text>
+          </View>
+
+          <TouchableOpacity style={styles.button} onPress={handleFinishAdoption}>
+            <Text style={styles.buttonText}>Concluir Adoção</Text>
+          </TouchableOpacity>
         </View>
-
-        <Text style={styles.title}>Informações do Cão</Text>
-
-        <View style={styles.infoBox}>
-          <Text style={styles.info}>🐶 Nome: <Text style={styles.value}>{name}</Text></Text>
-          <Text style={styles.info}>📍 Distância: <Text style={styles.value}>{distance}</Text></Text>
-          <Text style={styles.info}>🎂 Idade: <Text style={styles.value}>{age}</Text></Text>
-        </View>
-
-        <TouchableOpacity style={styles.button} onPress={handleFinishAdoption}>
-          <Text style={styles.buttonText}>Concluir Adoção</Text>
-        </TouchableOpacity>
       </View>
-
-      <MenuCentral />
-    </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#f0fdf4",
-    paddingBottom: 70,
-  },
+  background: { flex: 1 },
+  container: { flex: 1, paddingBottom: 70 },
   content: {
     flex: 1,
     justifyContent: "center",
@@ -84,8 +96,8 @@ const styles = StyleSheet.create({
     height: 90,
   },
   imageWrapper: {
-    width: '100%',
-    height: '50%',
+    width: "100%",
+    height: "50%",
     borderRadius: 16,
     overflow: "hidden",
     backgroundColor: "#eee",

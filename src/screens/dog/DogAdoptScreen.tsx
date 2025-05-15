@@ -1,15 +1,8 @@
 import React, { useEffect, useState } from "react";
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Image,
-  ActivityIndicator,
-  Dimensions,
-} from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Image, ActivityIndicator, Dimensions, ImageBackground,} from "react-native";
 import axios from "axios";
 import { useRouter, useLocalSearchParams } from "expo-router";
+import { BlurView } from "expo-blur";
 import MenuCentral from "@/src/components/MenuCentral";
 
 const screenWidth = Dimensions.get("window").width;
@@ -49,7 +42,10 @@ export default function DogAdoptScreen() {
       const response = await axios.get("https://dog.ceo/api/breeds/image/random");
       setDogImage(response.data.message);
 
-      const randomNames = ["Rex", "Bolt", "Luna", "Max", "Maggie"];
+      const randomNames = [
+        "Rex", "Bolt", "Luna", "Max", "Maggie", "Scooby", 
+        "Theo", "Thor", "Sammy", "Maia", "Salsicha", "Latrel", "Kings",
+      ];
       const dist = generateRandomDistance();
       const maxDistance = parseInt((distance as string)?.replace("km", "") || "100");
 
@@ -81,6 +77,8 @@ export default function DogAdoptScreen() {
       params: {
         name: dog.name,
         image: dogImage || "",
+        distance: dog.distance,
+        age: dog.age,
       },
     });
   };
@@ -94,58 +92,81 @@ export default function DogAdoptScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.content}>
-        <View style={styles.imageWrapper}>
-          {loading ? (
-            <ActivityIndicator size="large" color="#3A9D8A" />
-          ) : (
-            dogImage && (
-              <Image
-                source={{ uri: dogImage }}
-                style={styles.fullWidthImage}
-                resizeMode="cover"
-              />
-            )
-          )}
+    <ImageBackground
+      source={require("@/assets/images/maya2.png")}
+      style={styles.background}
+      resizeMode="cover"
+    >
+      <BlurView intensity={70} tint="dark" style={StyleSheet.absoluteFill} />
+
+      <View style={styles.container}>
+        <View style={styles.content}>
+          <View style={styles.adoptionInfoWrapper}>
+            <Image
+              source={require("@/assets/images/adopt.io-logo.png")}
+              style={styles.logoSmall}
+              resizeMode="contain"
+            />
+            <Text style={styles.adoptionText}>
+              Adotar é transformar vidas: dê uma chance para um amigo fiel.
+            </Text>
+          </View>
+
+          <View style={styles.imageWrapper}>
+            {loading ? (
+              <ActivityIndicator size="large" color="#3A9D8A" />
+            ) : (
+              dogImage && (
+                <Image
+                  source={{ uri: dogImage }}
+                  style={styles.fullWidthImage}
+                  resizeMode="cover"
+                />
+              )
+            )}
+          </View>
+
+          <Text style={styles.dogName}>{dog.name}</Text>
+
+          <View style={styles.infoContainer}>
+            <Text style={styles.dogInfo}>Distância: {dog.distance}</Text>
+            <Text style={styles.dogInfo}>Idade: {dog.age}</Text>
+          </View>
+
+          <TouchableOpacity style={styles.adoptButton} onPress={handleAdopt}>
+            <Text style={styles.buttonText}>Adotar</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[styles.adoptButton, styles.secondaryButton]}
+            onPress={handleViewAnother}
+          >
+            <Text style={styles.buttonText}>Ver Outro Pet</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[styles.adoptButton, styles.secondaryButton]}
+            onPress={handleGoToFilters}
+          >
+            <Text style={styles.buttonText}>Filtros</Text>
+          </TouchableOpacity>
         </View>
 
-        <Text style={styles.dogName}>{dog.name}</Text>
-
-        <View style={styles.infoContainer}>
-          <Text style={styles.dogInfo}>Distância: {dog.distance}</Text>
-          <Text style={styles.dogInfo}>Idade: {dog.age}</Text>
-        </View>
-
-        <TouchableOpacity style={styles.adoptButton} onPress={handleAdopt}>
-          <Text style={styles.buttonText}>Adotar</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[styles.adoptButton, styles.secondaryButton]}
-          onPress={handleViewAnother}
-        >
-          <Text style={styles.buttonText}>Ver Outro Pet</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity
-          style={[styles.adoptButton, styles.secondaryButton]}
-          onPress={handleGoToFilters}
-        >
-          <Text style={styles.buttonText}>Filtros</Text>
-        </TouchableOpacity>
+        <MenuCentral />
       </View>
-
-      <MenuCentral />
-    </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+  },
   container: {
     flex: 1,
-    backgroundColor: "#f0fdf4",
     paddingBottom: 100,
+    justifyContent: "center",
+    alignItems: "center",
   },
   content: {
     flex: 1,
@@ -153,6 +174,31 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingTop: 40,
     paddingHorizontal: 20,
+    width: "100%",
+  },
+  adoptionInfoWrapper: {
+    flexDirection: "row",
+    alignItems: "center",
+    backgroundColor: "rgba(58, 157, 138, 0.3)",
+    paddingVertical: 10,
+    paddingHorizontal: 15,
+    borderRadius: 12,
+    marginBottom: 12,
+    maxWidth: "95%",
+    alignSelf: "center",
+  },
+  logoSmall: {
+    width: 32,
+    height: 32,
+    marginRight: 10,
+  },
+  adoptionText: {
+    flex: 1,
+    color: "#fff",
+    fontSize: 16,
+    textShadowColor: "rgba(0,0,0,0.7)",
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 4,
   },
   imageWrapper: {
     width: screenWidth,
@@ -169,8 +215,11 @@ const styles = StyleSheet.create({
   dogName: {
     fontSize: 26,
     fontWeight: "bold",
-    color: "#3A9D8A",
+    color: "#fff",
     marginTop: 10,
+    textShadowColor: "rgba(0,0,0,0.9)",
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 6,
   },
   infoContainer: {
     marginTop: 10,
@@ -179,11 +228,11 @@ const styles = StyleSheet.create({
   },
   dogInfo: {
     fontSize: 16,
-    color: "#333",
+    color: "#eee",
     marginVertical: 2,
   },
   adoptButton: {
-    backgroundColor: "#3A9D8A",
+    backgroundColor: "rgba(58,157,138,0.9)",
     paddingVertical: 12,
     paddingHorizontal: 30,
     borderRadius: 8,
@@ -192,7 +241,7 @@ const styles = StyleSheet.create({
     minWidth: 200,
   },
   secondaryButton: {
-    backgroundColor: "#ccc",
+    backgroundColor: "rgba(204,204,204,0.7)",
   },
   buttonText: {
     color: "#fff",

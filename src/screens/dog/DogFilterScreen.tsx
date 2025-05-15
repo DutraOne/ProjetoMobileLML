@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Image, Dimensions } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Image, Dimensions, ImageBackground,} from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { useRouter } from "expo-router";
+import { BlurView } from "expo-blur";
 import MenuCentral from "@/src/components/MenuCentral";
 
 const screenWidth = Dimensions.get("window").width;
@@ -13,7 +14,6 @@ export default function DogFilterScreen() {
   const [ageGroup, setAgeGroup] = useState("Filhote");
 
   const handleSearch = () => {
-    console.log("Filtros selecionados:", { distance, ageGroup });
     router.push({
       pathname: "/DogAdopt/DogAdopt",
       params: { distance, ageGroup },
@@ -21,65 +21,77 @@ export default function DogFilterScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.content}>
-        <Image
-          source={require("@/assets/images/adopt.io-logo.png")}
-          style={styles.logo}
-        />
-        <Text style={styles.subtitle}>
-          Quer uma busca personalizada?{"\n"}
-          <Text style={styles.subtitleBold}>
-            Seu melhor amigo pode estar mais próximo do que você imagina.
+    <ImageBackground
+      source={require("@/assets/images/maya.png")}
+      style={styles.background}
+      resizeMode="cover"
+    >
+      <BlurView intensity={70} tint="dark" style={StyleSheet.absoluteFill} />
+
+      <View style={styles.container}>
+        <View style={styles.content}>
+          <Image
+            source={require("@/assets/images/adopt.io-logo.png")}
+            style={styles.logo}
+          />
+          <Text style={styles.subtitle}>
+            Quer uma busca personalizada?{"\n"}
+            <Text style={styles.subtitleBold}>
+              Seu melhor amigo pode estar mais próximo do que você imagina.
+            </Text>
           </Text>
-        </Text>
 
-        <Image
-          source={require("@/assets/images/maya.png")}
-          style={styles.dogImage}
-          resizeMode="cover"
-        />
+          <Image
+            source={require("@/assets/images/maya.png")}
+            style={styles.dogImage}
+            resizeMode="cover"
+          />
 
-        <Text style={styles.title}>Escolha seus filtros</Text>
+          <Text style={styles.title}>Escolha os seus filtros:</Text>
 
-        <Text style={styles.label}>Distância:</Text>
-        <View style={styles.pickerWrapper}>
-          <Picker
-            selectedValue={distance}
-            onValueChange={(itemValue) => setDistance(itemValue)}
-          >
-            <Picker.Item label="5 km" value="5km" />
-            <Picker.Item label="10 km" value="10km" />
-            <Picker.Item label="15 km" value="15km" />
-            <Picker.Item label="20 km" value="20km" />
-          </Picker>
+          <Text style={styles.label}>Distância:</Text>
+          <View style={styles.pickerWrapper}>
+            <Picker
+              selectedValue={distance}
+              onValueChange={(itemValue) => setDistance(itemValue)}
+            >
+              <Picker.Item label="5 km" value="5km" />
+              <Picker.Item label="10 km" value="10km" />
+              <Picker.Item label="15 km" value="15km" />
+              <Picker.Item label="20 km" value="20km" />
+            </Picker>
+          </View>
+
+          <Text style={styles.label}>Idade:</Text>
+          <View style={styles.pickerWrapper}>
+            <Picker
+              selectedValue={ageGroup}
+              onValueChange={(itemValue) => setAgeGroup(itemValue)}
+            >
+              <Picker.Item label="Filhote" value="Filhote" />
+              <Picker.Item label="Adulto" value="Adulto" />
+            </Picker>
+          </View>
+
+          <TouchableOpacity style={styles.button} onPress={handleSearch}>
+            <Text style={styles.buttonText}>Filtrar Busca</Text>
+          </TouchableOpacity>
         </View>
 
-        <Text style={styles.label}>Idade:</Text>
-        <View style={styles.pickerWrapper}>
-          <Picker
-            selectedValue={ageGroup}
-            onValueChange={(itemValue) => setAgeGroup(itemValue)}
-          >
-            <Picker.Item label="Filhote" value="Filhote" />
-            <Picker.Item label="Adulto" value="Adulto" />
-          </Picker>
-        </View>
-
-        <TouchableOpacity style={styles.button} onPress={handleSearch}>
-          <Text style={styles.buttonText}>Buscar Cachorros</Text>
-        </TouchableOpacity>
+        <MenuCentral />
       </View>
-
-      <MenuCentral />
-    </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
+  background: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+  },
   container: {
     flex: 1,
-    backgroundColor: "#f0f0f0",
     paddingBottom: 70,
   },
   content: {
@@ -95,13 +107,13 @@ const styles = StyleSheet.create({
   },
   subtitle: {
     fontSize: 16,
-    color: "#444",
+    color: "#fff",
     textAlign: "center",
     marginVertical: 10,
   },
   subtitleBold: {
     fontWeight: "600",
-    color: "#3A9D8A",
+    color: "#FFD166",
   },
   dogImage: {
     width: screenWidth,
@@ -111,12 +123,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 24,
     fontWeight: "bold",
-    color: "#3A9D8A",
+    color: "#fff",
     marginBottom: 20,
   },
   label: {
     fontSize: 16,
-    color: "#333",
+    color: "#fff",
     marginBottom: 5,
   },
   pickerWrapper: {

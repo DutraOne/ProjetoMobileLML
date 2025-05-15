@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import {View, Text, TextInput, StyleSheet, TouchableOpacity, Alert,} from "react-native";
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, Alert, ImageBackground,} from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
+import { BlurView } from "expo-blur";
 
 export default function ChangeUsername() {
   const [username, setUsername] = useState("");
@@ -24,48 +25,61 @@ export default function ChangeUsername() {
   };
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.label}>Novo nome de usuário</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Digite seu novo nome de usuário"
-        value={username}
-        onChangeText={setUsername}
-      />
+    <ImageBackground
+      source={require("@/assets/images/maya2.png")}
+      style={styles.background}
+      resizeMode="cover"
+    >
+      <BlurView intensity={70} tint="dark" style={StyleSheet.absoluteFill} />
 
-      <TouchableOpacity style={styles.button} onPress={handleSave}>
-        <Text style={styles.buttonText}>Salvar</Text>
-      </TouchableOpacity>
+      <View style={styles.overlay}>
+        <Text style={styles.label}>Novo nome de usuário</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Digite seu novo nome de usuário"
+          placeholderTextColor="#aaa"
+          value={username}
+          onChangeText={setUsername}
+        />
 
-      <TouchableOpacity
-        style={[styles.button, styles.cancel]}
-        onPress={() => router.back()}
-      >
-        <Text style={styles.buttonText}>Cancelar</Text>
-      </TouchableOpacity>
-    </View>
+        <TouchableOpacity style={styles.button} onPress={handleSave}>
+          <Text style={styles.buttonText}>Salvar</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.button, styles.cancel]}
+          onPress={() => router.back()}
+        >
+          <Text style={styles.buttonText}>Cancelar</Text>
+        </TouchableOpacity>
+      </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  background: {
     flex: 1,
-    backgroundColor: "#f0fdf4",
+  },
+  overlay: {
+    flex: 1,
     padding: 24,
     justifyContent: "center",
   },
   label: {
     fontSize: 18,
     marginBottom: 12,
-    color: "#333",
+    color: "#fff",
+    fontWeight: "bold",
   },
   input: {
     borderWidth: 1,
-    borderColor: "#ccc",
+    borderColor: "rgba(255,255,255,0.4)",
     borderRadius: 8,
     padding: 12,
     marginBottom: 20,
-    backgroundColor: "#fff",
+    backgroundColor: "rgba(255, 255, 255, 0.1)",
+    color: "#fff",
   },
   button: {
     backgroundColor: "#3A9D8A",
@@ -75,7 +89,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   cancel: {
-    backgroundColor: "#ccc",
+    backgroundColor: "#999",
   },
   buttonText: {
     color: "#fff",

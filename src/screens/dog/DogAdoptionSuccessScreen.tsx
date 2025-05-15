@@ -1,10 +1,12 @@
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import { useRouter } from "expo-router";
+import { View, Text, StyleSheet, TouchableOpacity, Image, ImageBackground,} from "react-native";
+import { useRouter, useLocalSearchParams } from "expo-router";
+import { BlurView } from "expo-blur";
 import MenuCentral from "@/src/components/MenuCentral";
 
 export default function AdoptionSuccessScreen() {
   const router = useRouter();
+  const { image, name } = useLocalSearchParams();
 
   const handleBackToHome = () => {
     router.push("/DogAdopt/DogAdopt");
@@ -15,54 +17,88 @@ export default function AdoptionSuccessScreen() {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.content}>
-        <Text style={styles.congratulationsText}>🎉 Parabéns pela Adoção!</Text>
-        <Text style={styles.message}>
-          Você acaba de dar um lar para um novo amigo!
-        </Text>
+    <ImageBackground
+      source={require("@/assets/images/maya2.png")}
+      style={styles.background}
+      resizeMode="cover"
+    >
+      <BlurView intensity={70} tint="dark" style={StyleSheet.absoluteFill} />
 
-        <TouchableOpacity style={styles.button} onPress={handleBackToHome}>
-          <Text style={styles.buttonText}>Voltar para a Página Inicial</Text>
-        </TouchableOpacity>
+      <View style={styles.container}>
+        <View style={styles.content}>
+          <Text style={styles.congratulationsText}>🎉 Parabéns pela Adoção!</Text>
+          <Text style={styles.message}>
+            Você acaba de dar um lar para{" "}
+            <Text style={{ fontWeight: "bold" }}>{name ?? "seu novo amigo"}!</Text>
+          </Text>
 
-        <TouchableOpacity
-          style={[styles.button, { marginTop: 12 }]}
-          onPress={handleBackToAdoptions}
-        >
-          <Text style={styles.buttonText}>Volte ao Menu de Adoções</Text>
-        </TouchableOpacity>
+          {image ? (
+            <Image source={{ uri: image as string }} style={styles.dogImage} />
+          ) : (
+            <Text style={styles.noImageText}>Imagem não disponível</Text>
+          )}
+
+          <TouchableOpacity style={styles.button} onPress={handleBackToHome}>
+            <Text style={styles.buttonText}>Voltar para a Página Inicial</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={[styles.button, { marginTop: 12 }]}
+            onPress={handleBackToAdoptions}
+          >
+            <Text style={styles.buttonText}>Volte ao Menu de Adoções</Text>
+          </TouchableOpacity>
+        </View>
+
+        <MenuCentral />
       </View>
-
-      <MenuCentral />
-    </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
+  background: { flex: 1 },
   container: {
     flex: 1,
-    backgroundColor: "#f0fdf4",
     paddingBottom: 70,
+    justifyContent: "center",
+    alignItems: "center",
   },
   content: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
     padding: 20,
+    width: "100%",
   },
   congratulationsText: {
     fontSize: 28,
     fontWeight: "bold",
-    color: "#3A9D8A",
+    color: "#fff",
     marginBottom: 12,
     textAlign: "center",
+    textShadowColor: "rgba(0,0,0,0.6)",
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 4,
   },
   message: {
     fontSize: 16,
-    color: "#333",
-    marginBottom: 24,
+    color: "#fff",
+    marginBottom: 16,
     textAlign: "center",
+  },
+  dogImage: {
+    width: 250,
+    height: 250,
+    borderRadius: 16,
+    marginBottom: 24,
+    borderWidth: 3,
+    borderColor: "#fff",
+  },
+  noImageText: {
+    color: "#ccc",
+    marginBottom: 24,
+    fontStyle: "italic",
   },
   button: {
     backgroundColor: "#3A9D8A",
